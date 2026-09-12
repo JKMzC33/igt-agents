@@ -1,5 +1,6 @@
 starting_balance: 2000
 number_of_trials: 10
+number_of_games: 100
 
 decks:
   A:
