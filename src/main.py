@@ -1,16 +1,34 @@
-# This is a sample Python script.
+import yaml
+from pathlib import Path
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+BASE_DIR = Path(__file__).resolve().parent.parent
 
+with open(BASE_DIR / "data" / "info.yml", "r") as f:
+    config = yaml.safe_load(f)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def engine(X,  balance):
+    diff = X[0] - X[1]
+    balance -= diff
+    return balance
 
+def Iowatest(decks,n,debt):
+    positions = {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "D": 0
+    }
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+    for i in range(n):
+        while True:
+            inp = input("Choose a card: A, B, C, D: ").strip().upper()
+            if inp in ("A", "B", "C", "D"):
+                break
+            print("Niepoprawny wybór. Wpisz A, B, C lub D.")
+        debt = engine(decks[inp][positions[inp]], debt)
+        print(f"+{decks[inp][positions[inp]][0]}, -{decks[inp][positions[inp]][1]} Debt: {debt}")
+        positions[inp] += 1
+    print(f"You finished with Debt: {debt}")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+decks = config["decks"]
+Iowatest(decks, config["number_of_trials"], config["starting_balance"])
