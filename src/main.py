@@ -39,10 +39,8 @@ def Iowatest(game_id,decks,n,debt,choice_func):
         choice = choice_func()
         card = decks[choice][positions[choice]]
         debt = engine(card, debt)
-        print(f"+{card[0]}, -{card[1]} Debt: {debt}")
         history.append(save_history(game_id, i, choice, card[0], card[1], debt))
         positions[choice] += 1
-    print(f"You finished with Debt: {debt}")
     return history
 
 def save_to_csv(history):
